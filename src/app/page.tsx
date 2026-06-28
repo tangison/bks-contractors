@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import {
   Building2,
@@ -11,6 +11,7 @@ import {
   Zap,
   Home as HomeIcon,
   Trash2,
+  MessageCircle,
 } from "lucide-react";
 
 const WHATSAPP_NUMBER = "264817877867";
@@ -72,7 +73,6 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -84,7 +84,6 @@ export default function Home() {
     };
   }, [isMobileMenuOpen]);
 
-  // Escape key closes mobile menu
   useEffect(() => {
     if (!isMobileMenuOpen) return;
     const handleEscape = (e: KeyboardEvent) => {
@@ -96,8 +95,8 @@ export default function Home() {
 
   const menuFirstRef = useRef<HTMLAnchorElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  // Focus management for mobile menu
   useEffect(() => {
     if (isMobileMenuOpen) {
       menuFirstRef.current?.focus();
@@ -106,16 +105,38 @@ export default function Home() {
     }
   }, [isMobileMenuOpen]);
 
+  const handleMenuKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key !== "Tab" || !menuRef.current) return;
+      const focusable = menuRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    },
+    []
+  );
+
   return (
     <div className="min-h-screen flex flex-col relative bg-[#F5F5F5] text-[#1A2A3A]">
-      {/* ===== SKIP TO CONTENT ===== */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#F26522] focus:text-white focus:px-4 focus:py-2 focus:rounded"
       >
         Skip to main content
       </a>
-      {/* ===== FLOATING NAVIGATION ===== */}
       <div className="fixed top-0 left-0 w-full z-50 flex justify-center pointer-events-none px-4 pt-4 transition-all duration-500">
         <header
           className={`pointer-events-auto w-full max-w-7xl transition-all duration-500 flex justify-between items-center ${
@@ -123,9 +144,7 @@ export default function Home() {
               ? "bg-[#1A2A3A]/95 backdrop-blur-md border border-[#4A6A8A]/40 shadow-2xl py-3 px-6 lg:px-8 rounded-xl"
               : "bg-transparent border-transparent py-5 px-6 lg:px-12"
           }`}
-          role="banner"
         >
-          {/* Logo Image */}
           <a
             href="https://bkscontractors.cc"
             className="flex items-center select-none cursor-pointer"
@@ -141,7 +160,6 @@ export default function Home() {
             />
           </a>
 
-          {/* Desktop Nav */}
           <nav
             className="hidden md:flex items-center gap-8"
             aria-label="Main navigation"
@@ -162,13 +180,12 @@ export default function Home() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#F26522] text-[#FFFFFF] font-[var(--font-subheading)] text-sm py-2.5 px-6 rounded hover:bg-[#d9561c] transition-colors active:scale-95 flex items-center gap-2 uppercase tracking-wider"
+              className="bg-[#D05518] text-[#FFFFFF] font-[var(--font-subheading)] text-sm py-2.5 px-6 rounded hover:bg-[#B84816] transition-colors active:scale-95 flex items-center gap-2 uppercase tracking-wider"
             >
               Get a Quote on WhatsApp
             </a>
           </nav>
 
-          {/* Mobile Menu Toggle */}
           <button
             ref={toggleRef}
             className="md:hidden text-[#F5F5F5] p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F26522] rounded"
@@ -189,37 +206,13 @@ export default function Home() {
             >
               {isMobileMenuOpen ? (
                 <>
-                  <line
-                    x1="18"
-                    y1="6"
-                    x2="6"
-                    y2="18"
-                    className="origin-center transition-all duration-300"
-                  />
-                  <line
-                    x1="6"
-                    y1="6"
-                    x2="18"
-                    y2="18"
-                    className="origin-center transition-all duration-300"
-                  />
+                  <line x1="18" y1="6" x2="6" y2="18" className="origin-center transition-all duration-300" />
+                  <line x1="6" y1="6" x2="18" y2="18" className="origin-center transition-all duration-300" />
                 </>
               ) : (
                 <>
-                  <line
-                    x1="4"
-                    y1="9"
-                    x2="20"
-                    y2="9"
-                    className="transition-all duration-300"
-                  />
-                  <line
-                    x1="4"
-                    y1="15"
-                    x2="20"
-                    y2="15"
-                    className="transition-all duration-300"
-                  />
+                  <line x1="4" y1="9" x2="20" y2="9" className="transition-all duration-300" />
+                  <line x1="4" y1="15" x2="20" y2="15" className="transition-all duration-300" />
                 </>
               )}
             </svg>
@@ -227,9 +220,10 @@ export default function Home() {
         </header>
       </div>
 
-      {/* ===== MOBILE NAV DROPDOWN ===== */}
       <div
         id="mobile-menu"
+        ref={menuRef}
+        onKeyDown={handleMenuKeyDown}
         className={`fixed inset-0 z-40 bg-[#1A2A3A] transition-transform duration-300 ease-in-out md:hidden flex flex-col pt-28 px-6 ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
@@ -240,7 +234,7 @@ export default function Home() {
         <a
           ref={menuFirstRef}
           href="#services"
-          className="font-[var(--font-subheading)] text-2xl text-[#F5F5F5] py-6 border-b border-[#4A6A8A]/20 rounded px-2"
+          className="font-[var(--font-subheading)] text-2xl text-[#F5F5F5] py-6 border-b border-[#4A6A8A]/20 rounded px-2 focus-visible:ring-2 focus-visible:ring-[#F26522]"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           Core Services
@@ -256,56 +250,26 @@ export default function Home() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 bg-[#F26522] text-[#FFFFFF] font-[var(--font-subheading)] text-xl py-4 px-6 rounded text-center w-full shadow-lg uppercase tracking-wider"
+          className="mt-8 bg-[#D05518] text-[#FFFFFF] font-[var(--font-subheading)] text-xl py-4 px-6 rounded text-center w-full shadow-lg uppercase tracking-wider"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           Message Us on WhatsApp
         </a>
       </div>
 
-      {/* ===== MAIN CONTENT ===== */}
       <main className="flex-grow" id="main-content">
-        {/* ===== HERO SECTION ===== */}
         <section
           className="relative bg-[#1A2A3A] pt-40 pb-20 lg:pt-56 lg:pb-32 overflow-hidden"
           aria-labelledby="hero-heading"
         >
-          {/* Abstract Grid Background */}
-          <div
-            className="absolute inset-0 opacity-[0.07] pointer-events-none"
-            aria-hidden="true"
-          >
-            <svg
-              width="100%"
-              height="100%"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+          <div className="absolute inset-0 opacity-[0.07] pointer-events-none" aria-hidden="true">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <pattern
-                  id="grid"
-                  width="40"
-                  height="40"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path
-                    d="M 40 0 L 0 0 0 40"
-                    fill="none"
-                    stroke="#F5F5F5"
-                    strokeWidth="1"
-                  />
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#F5F5F5" strokeWidth="1" />
                 </pattern>
-                <pattern
-                  id="diagonal"
-                  width="20"
-                  height="20"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path
-                    d="M-1,1 l2,-2 M0,20 l20,-20 M19,21 l2,-2"
-                    fill="none"
-                    stroke="#4A6A8A"
-                    strokeWidth="0.5"
-                  />
+                <pattern id="diagonal" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M-1,1 l2,-2 M0,20 l20,-20 M19,21 l2,-2" fill="none" stroke="#4A6A8A" strokeWidth="0.5" />
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#grid)" />
@@ -316,10 +280,7 @@ export default function Home() {
           <div className="container mx-auto px-6 lg:px-12 relative z-10">
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 mb-6 border border-[#4A6A8A] bg-[#4A6A8A]/20 px-4 py-2 rounded">
-                <span
-                  className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"
-                  aria-hidden="true"
-                ></span>
+                <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" aria-hidden="true"></span>
                 <span className="font-[var(--font-subheading)] text-sm text-[#F5F5F5] uppercase tracking-wider">
                   Building across Namibia
                 </span>
@@ -347,20 +308,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="bg-[#0D7A3E] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-8 rounded hover:bg-[#0a6433] transition-colors flex items-center justify-center gap-3 group shadow-lg shadow-[#0D7A3E]/20 uppercase tracking-wider"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-white"
-                    aria-hidden="true"
-                  >
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                  </svg>
+                  <MessageCircle size={24} className="text-white" aria-hidden="true" />
                   Get Your Free Quote
                 </a>
                 <a
@@ -374,7 +322,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ===== SERVICES SECTION ===== */}
         <section
           id="services"
           className="py-24 bg-[#FFFFFF]"
@@ -389,10 +336,7 @@ export default function Home() {
                 >
                   ONE TEAM. EVERY TRADE.
                 </h2>
-                <div
-                  className="w-20 h-2 bg-[#F26522]"
-                  aria-hidden="true"
-                ></div>
+                <div className="w-20 h-2 bg-[#F26522]" aria-hidden="true"></div>
                 <p className="mt-6 text-lg text-[#4A6A8A]">
                   Most contractors specialise in one trade and sub-contract the
                   rest. We don&apos;t. Every service below is delivered by our
@@ -429,16 +373,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ===== SAFETY / COMMITMENT SECTION ===== */}
         <section
           id="safety"
           className="bg-[#4A6A8A] py-20 lg:py-32 relative overflow-hidden"
           aria-labelledby="safety-heading"
         >
-          <div
-            className="absolute right-0 top-0 h-full w-1/3 bg-[#1A2A3A] hidden lg:block transform -skew-x-12 translate-x-20"
-            aria-hidden="true"
-          ></div>
+          <div className="absolute right-0 top-0 h-full w-1/3 bg-[#1A2A3A] hidden lg:block transform -skew-x-12 translate-x-20" aria-hidden="true"></div>
 
           <div className="container mx-auto px-6 lg:px-12 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -449,12 +389,9 @@ export default function Home() {
                 >
                   NO SHORTCUTS.
                   <br /> NO CALLBACKS.
-                  <br /> <span className="text-[#F26522]">JUST WORK THAT LASTS.</span>
+                  <br /> <span className="text-[#FFD700]">JUST WORK THAT LASTS.</span>
                 </h2>
-                <div
-                  className="w-20 h-2 bg-[#F26522] mb-8"
-                  aria-hidden="true"
-                ></div>
+                <div className="w-20 h-2 bg-[#F26522] mb-8" aria-hidden="true"></div>
                 <p className="text-lg text-[#F5F5F5] mb-8 leading-relaxed max-w-lg">
                   Every BKS site runs under OSHA-compliant safety protocols with
                   certified tradespeople on-site daily. We don&apos;t cut
@@ -464,15 +401,8 @@ export default function Home() {
 
                 <ul className="space-y-4" role="list">
                   {safetyItems.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-3 text-[#FFFFFF]"
-                    >
-                      <ShieldCheck
-                        className="text-[#F26522] shrink-0"
-                        size={24}
-                        aria-hidden="true"
-                      />
+                    <li key={item} className="flex items-center gap-3 text-[#FFFFFF]">
+                      <ShieldCheck className="text-[#FFD700] shrink-0" size={24} aria-hidden="true" />
                       <span className="font-[var(--font-subheading)] text-sm tracking-wide uppercase">
                         {item}
                       </span>
@@ -481,12 +411,11 @@ export default function Home() {
                 </ul>
               </div>
 
-              {/* Call to Action Block */}
               <div className="relative w-full bg-[#1A2A3A] border-4 border-[#F26522] p-8 lg:p-12 text-center">
                 <h3 className="font-[var(--font-heading)] text-3xl text-white mb-4 tracking-tight">
                   HAVE A PROJECT IN MIND?
                 </h3>
-                <p className="text-[#4A6A8A] mb-8">
+                <p className="text-[#8AABC4] mb-8">
                   Send us the details on WhatsApp. Our team reviews every
                   enquiry within the day. No forms, no waiting, no sales
                   pitch. Just an honest answer on whether we&apos;re the
@@ -496,7 +425,7 @@ export default function Home() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block bg-[#F26522] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-10 rounded hover:bg-[#d9561c] transition-transform hover:scale-105 uppercase tracking-wider"
+                  className="inline-block bg-[#D05518] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-10 rounded hover:bg-[#B84816] transition-transform hover:scale-105 uppercase tracking-wider"
                 >
                   Get Your Free Quote
                 </a>
@@ -506,14 +435,9 @@ export default function Home() {
         </section>
       </main>
 
-      {/* ===== FOOTER ===== */}
-      <footer
-        className="bg-[#1A2A3A] pt-16 pb-10 border-t-[12px] border-[#F26522] mt-auto"
-        role="contentinfo"
-      >
+      <footer className="bg-[#1A2A3A] pt-16 pb-10 border-t-[12px] border-[#F26522] mt-auto">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
-            {/* Footer Logo Image */}
             <a
               href="https://bkscontractors.cc"
               className="flex items-center select-none cursor-pointer"
@@ -521,7 +445,8 @@ export default function Home() {
             >
               <Image
                 src="/bks-logo.png"
-                alt="BKS Contractors logo"
+                alt=""
+                role="presentation"
                 width={180}
                 height={64}
                 className="h-16 w-auto object-contain brightness-0 invert"
@@ -535,7 +460,7 @@ export default function Home() {
               </div>
               <a
                 href="https://bkscontractors.cc"
-                className="text-[#4A6A8A] hover:text-[#F26522] transition-colors"
+                className="text-[#8AABC4] hover:text-[#F26522] transition-colors"
               >
                 bkscontractors.cc
               </a>
@@ -543,7 +468,7 @@ export default function Home() {
           </div>
 
           <div className="border-t border-[#4A6A8A]/30 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-[#4A6A8A] text-sm text-center md:text-left">
+            <p className="text-[#8AABC4] text-sm text-center md:text-left">
               &copy; {new Date().getFullYear()} BKS Contractors. General
               Contracting &amp; Construction Management. All rights reserved.
             </p>
@@ -551,32 +476,15 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* ===== FLOATING WHATSAPP WIDGET ===== */}
       <a
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] hover:bg-[#20ba59] hover:scale-110 transition-all duration-300 group flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#F26522] focus-visible:ring-offset-2"
+        className="fixed bottom-6 right-6 z-50 bg-[#128C3E] text-white p-4 rounded-full shadow-[0_4px_20px_rgba(18,140,62,0.5)] ring-2 ring-[#0D7A3E] hover:bg-[#0D7A3E] hover:scale-110 transition-all duration-300 group flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#F26522] focus-visible:ring-offset-2"
         aria-label="Chat on WhatsApp"
       >
-        <span
-          className="absolute w-full h-full rounded-full border-2 border-[#25D366] opacity-0 group-hover:animate-ping"
-          aria-hidden="true"
-        ></span>
-        <svg
-          viewBox="0 0 24 24"
-          width="32"
-          height="32"
-          stroke="currentColor"
-          strokeWidth="2"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="relative z-10"
-          aria-hidden="true"
-        >
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-        </svg>
+        <span className="absolute w-full h-full rounded-full border-2 border-[#128C3E] opacity-0 group-hover:animate-ping" aria-hidden="true"></span>
+        <MessageCircle size={32} className="relative z-10" aria-hidden="true" />
       </a>
     </div>
   );
