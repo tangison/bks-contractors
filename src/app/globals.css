@@ -1,14 +1,11 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-heading: var(--font-heading);
   --font-subheading: var(--font-subheading);
 
-  /* BKS Brand Colors */
   --color-bks-navy: #1A2A3A;
   --color-bks-orange: #F26522;
   --color-bks-steel: #4A6A8A;
@@ -32,7 +29,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Global focus-visible for keyboard navigation */
 :focus-visible {
   outline: 2px solid #F26522;
   outline-offset: 2px;
