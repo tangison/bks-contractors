@@ -17,20 +17,21 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "BKS Contractors — General Contracting & Construction Management | Namibia",
+  title: "BKS Contractors — General Contractor in Namibia | On Time, Every Time",
   description:
-    "BKS Contractors delivers comprehensive construction services across Namibia — general contracting, construction management, renovations, plumbing, electrical, roofing, and waste removal. Contact us for reliable, safety-compliant builds.",
+    "BKS Contractors — full-service general contractor in Namibia. One team handles your entire build: foundations, plumbing, electrical, roofing. Free quote.",
   keywords: [
     "BKS Contractors",
     "general contractor Namibia",
+    "construction company Namibia",
+    "Windhoek contractor",
     "construction management",
     "renovations Namibia",
-    "plumbing",
-    "electrical",
-    "roofing",
-    "waste removal",
-    "commercial construction",
-    "Windhoek contractor",
+    "commercial plumbing",
+    "commercial electrical",
+    "roofing Namibia",
+    "site clearing",
+    "reliable contractor",
   ],
   authors: [{ name: "BKS Contractors" }],
   metadataBase: new URL("https://bkscontractors.cc"),
@@ -38,9 +39,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "BKS Contractors — Building Tomorrow's Foundations Today",
+    title: "BKS Contractors — Your Project, Built Right",
     description:
-      "Full-service general contracting and construction management. From foundation to final completion, we execute with exact tolerances.",
+      "One team, every trade. Foundations, plumbing, electrical, roofing — delivered on time, every time. Get your free quote.",
     url: "https://bkscontractors.cc",
     siteName: "BKS Contractors",
     locale: "en_NA",
@@ -48,9 +49,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BKS Contractors — Building Tomorrow's Foundations Today",
+    title: "BKS Contractors — Your Project, Built Right",
     description:
-      "Full-service general contracting and construction management in Namibia.",
+      "Full-service general contracting in Namibia. One team handles your entire build.",
   },
   robots: {
     index: true,
@@ -64,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-NA">
       <head>
         <link rel="icon" href="/bks-logo.svg" type="image/svg+xml" />
         <script
@@ -75,9 +76,14 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               name: "BKS Contractors",
               description:
-                "Full-service general contracting and construction management in Namibia.",
+                "Full-service general contractor in Namibia. One team handles your entire build — foundations, plumbing, electrical, roofing, and waste removal.",
               url: "https://bkscontractors.cc",
               telephone: "+264817877867",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Windhoek",
+                addressCountry: "NA",
+              },
               areaServed: {
                 "@type": "Country",
                 name: "Namibia",

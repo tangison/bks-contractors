@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   Building2,
@@ -18,46 +18,46 @@ const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20BKS%20Contra
 
 const services = [
   {
-    name: "General Contractor",
-    desc: "Comprehensive oversight and execution of structural builds from foundation to final completion.",
+    name: "General Contracting",
+    desc: "One team handles your entire build — from the foundation pour to final handover. No subcontractor headaches, no shifting timelines.",
     icon: <Building2 size={32} />,
   },
   {
     name: "Construction Management",
-    desc: "Rigorous scheduling, material logistics, and strict quality assurance protocols.",
+    desc: "We keep your project on schedule and on budget. Material ordering, site coordination, and daily progress oversight included.",
     icon: <ClipboardList size={32} />,
   },
   {
     name: "Renovations",
-    desc: "Strategic structural updates, modernization, and comprehensive facility expansions.",
+    desc: "Update outdated structures without the disruption. We modernise facilities while keeping your operations running.",
     icon: <Hammer size={32} />,
   },
   {
     name: "Plumbing",
-    desc: "Industrial and commercial water, drainage, and complex pipeline system installations.",
+    desc: "Commercial water systems, drainage, and pipeline installations that pass inspection first time and last for years.",
     icon: <Wrench size={32} />,
   },
   {
     name: "Electrical",
-    desc: "High-voltage wiring, panel upgrades, and secure commercial electrical systems.",
+    desc: "Panel upgrades, high-voltage wiring, and full commercial electrical fit-outs by certified electricians.",
     icon: <Zap size={32} />,
   },
   {
     name: "Roofing",
-    desc: "Durable commercial roofing systems engineered for extreme weather resistance and longevity.",
+    desc: "Roofing systems built for Namibian conditions — heat, wind, and rain. No leaks, no callbacks, no shortcuts.",
     icon: <HomeIcon size={32} />,
   },
   {
     name: "Waste Removal",
-    desc: "Efficient site clearing, hazardous debris management, and post-construction cleanup.",
+    desc: "Site clearing and debris removal so your project stays clean, safe, and moving forward.",
     icon: <Trash2 size={32} />,
   },
 ];
 
 const safetyItems = [
-  "Multi-Disciplinary Site Supervisors",
-  "Certified Plumbers & Electricians",
-  "OSHA Compliant Operations",
+  "On-site supervisors on every job, every day",
+  "Certified tradespeople — not casual labour",
+  "OSHA-compliant safety on all sites",
 ];
 
 export default function Home() {
@@ -84,8 +84,37 @@ export default function Home() {
     };
   }, [isMobileMenuOpen]);
 
+  // Escape key closes mobile menu
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isMobileMenuOpen]);
+
+  const menuFirstRef = useRef<HTMLAnchorElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // Focus management for mobile menu
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      menuFirstRef.current?.focus();
+    } else {
+      toggleRef.current?.focus();
+    }
+  }, [isMobileMenuOpen]);
+
   return (
     <div className="min-h-screen flex flex-col relative bg-[#F5F5F5] text-[#1A2A3A]">
+      {/* ===== SKIP TO CONTENT ===== */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#F26522] focus:text-white focus:px-4 focus:py-2 focus:rounded"
+      >
+        Skip to main content
+      </a>
       {/* ===== FLOATING NAVIGATION ===== */}
       <div className="fixed top-0 left-0 w-full z-50 flex justify-center pointer-events-none px-4 pt-4 transition-all duration-500">
         <header
@@ -135,12 +164,13 @@ export default function Home() {
               rel="noopener noreferrer"
               className="bg-[#F26522] text-[#FFFFFF] font-[var(--font-subheading)] text-sm py-2.5 px-6 rounded hover:bg-[#d9561c] transition-colors active:scale-95 flex items-center gap-2 uppercase tracking-wider"
             >
-              Hire Us on WhatsApp
+              Get a Quote on WhatsApp
             </a>
           </nav>
 
           {/* Mobile Menu Toggle */}
           <button
+            ref={toggleRef}
             className="md:hidden text-[#F5F5F5] p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F26522] rounded"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -208,8 +238,9 @@ export default function Home() {
         aria-label="Mobile navigation"
       >
         <a
+          ref={menuFirstRef}
           href="#services"
-          className="font-[var(--font-subheading)] text-2xl text-[#F5F5F5] py-6 border-b border-[#4A6A8A]/20 focus-visible:ring-2 focus-visible:ring-[#F26522] rounded px-2"
+          className="font-[var(--font-subheading)] text-2xl text-[#F5F5F5] py-6 border-b border-[#4A6A8A]/20 rounded px-2"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           Core Services
@@ -290,23 +321,23 @@ export default function Home() {
                   aria-hidden="true"
                 ></span>
                 <span className="font-[var(--font-subheading)] text-sm text-[#F5F5F5] uppercase tracking-wider">
-                  Available Now for Deployment
+                  Trusted by businesses across Namibia
                 </span>
               </div>
               <h1
                 id="hero-heading"
                 className="font-[var(--font-heading)] text-5xl md:text-7xl lg:text-8xl text-[#FFFFFF] leading-[1.1] mb-8 tracking-tight"
               >
-                BUILDING
+                YOUR PROJECT,
                 <br />
-                TOMORROW&apos;S
+                BUILT RIGHT —
                 <br />
-                <span className="text-[#F26522]">FOUNDATIONS</span> TODAY.
+                <span className="text-[#F26522]">ON TIME, EVERY TIME.</span>
               </h1>
               <p className="text-xl md:text-2xl text-[#F5F5F5]/80 max-w-2xl mb-10 leading-relaxed">
-                From general contracting and site management to structural
-                renovations and heavy utilities. We execute with exact
-                tolerances.
+                One team handles your entire build — foundations, plumbing,
+                electrical, roofing, and clean-up. No subcontractor chaos.
+                No missed deadlines.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -314,7 +345,7 @@ export default function Home() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#25D366] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-8 rounded hover:bg-[#20ba59] transition-colors flex items-center justify-center gap-3 group shadow-lg shadow-[#25D366]/20 uppercase tracking-wider"
+                  className="bg-[#0D7A3E] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-8 rounded hover:bg-[#0a6433] transition-colors flex items-center justify-center gap-3 group shadow-lg shadow-[#0D7A3E]/20 uppercase tracking-wider"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -330,13 +361,13 @@ export default function Home() {
                   >
                     <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                   </svg>
-                  WhatsApp Direct
+                  Get Your Free Quote
                 </a>
                 <a
-                  href="https://bkscontractors.cc"
+                  href="#services"
                   className="bg-transparent border-2 border-[#4A6A8A] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-8 rounded hover:bg-[#4A6A8A]/20 transition-colors flex items-center justify-center uppercase tracking-wider"
                 >
-                  Visit Portal
+                  See What We Build
                 </a>
               </div>
             </div>
@@ -356,16 +387,16 @@ export default function Home() {
                   id="services-heading"
                   className="font-[var(--font-heading)] text-4xl md:text-5xl text-[#1A2A3A] mb-4 tracking-tight"
                 >
-                  COMPREHENSIVE SERVICES
+                  ONE TEAM. EVERY TRADE.
                 </h2>
                 <div
                   className="w-20 h-2 bg-[#F26522]"
                   aria-hidden="true"
                 ></div>
                 <p className="mt-6 text-lg text-[#4A6A8A]">
-                  As a full-service general contractor, we manage every phase of
-                  the construction lifecycle. From ground-breaking to electrical
-                  finishing.
+                  Most contractors specialise in one trade and sub-contract the
+                  rest. We don&apos;t. Every service below is delivered by our
+                  own people — so nothing falls through the cracks.
                 </p>
               </div>
             </div>
@@ -416,18 +447,19 @@ export default function Home() {
                   id="safety-heading"
                   className="font-[var(--font-heading)] text-4xl md:text-5xl text-[#FFFFFF] mb-6 tracking-tight"
                 >
-                  ENGINEERED FOR SAFETY.
-                  <br /> BUILT FOR DURABILITY.
+                  NO SHORTCUTS.
+                  <br /> NO CALLBACKS.
+                  <br /> <span className="text-[#F26522]">JUST WORK THAT LASTS.</span>
                 </h2>
                 <div
                   className="w-20 h-2 bg-[#F26522] mb-8"
                   aria-hidden="true"
                 ></div>
                 <p className="text-lg text-[#F5F5F5] mb-8 leading-relaxed max-w-lg">
-                  Construction requires exact execution. We employ rigorous
-                  quality control and compliant safety standards across all
-                  disciplines — whether we are laying foundations, routing
-                  plumbing, or installing heavy electrical arrays.
+                  Every BKS site runs under OSHA-compliant safety protocols with
+                  certified tradespeople on-site daily. We don&apos;t cut
+                  corners on materials, skip inspection steps, or leave until
+                  the job passes its own quality check.
                 </p>
 
                 <ul className="space-y-4" role="list">
@@ -452,11 +484,13 @@ export default function Home() {
               {/* Call to Action Block */}
               <div className="relative w-full bg-[#1A2A3A] border-4 border-[#F26522] p-8 lg:p-12 text-center">
                 <h3 className="font-[var(--font-heading)] text-3xl text-white mb-4 tracking-tight">
-                  READY TO BUILD?
+                  HAVE A PROJECT IN MIND?
                 </h3>
                 <p className="text-[#4A6A8A] mb-8">
-                  Send us your project scope via WhatsApp for immediate review
-                  by our engineering and management team.
+                  Send us the details on WhatsApp. Our team reviews every
+                  enquiry within the day — no forms, no waiting, no sales
+                  pitch. Just an honest answer on whether we&apos;re the
+                  right fit.
                 </p>
                 <a
                   href={WHATSAPP_URL}
@@ -464,7 +498,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="inline-block bg-[#F26522] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-10 rounded hover:bg-[#d9561c] transition-transform hover:scale-105 uppercase tracking-wider"
                 >
-                  Start Conversation
+                  Get Your Free Quote
                 </a>
               </div>
             </div>

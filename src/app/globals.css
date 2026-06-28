@@ -6,8 +6,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-heading);
   --font-subheading: var(--font-subheading);
 
@@ -15,7 +13,8 @@
   --color-bks-navy: #1A2A3A;
   --color-bks-orange: #F26522;
   --color-bks-steel: #4A6A8A;
-  --color-bks-wa: #25D366;
+  --color-bks-wa: #0D7A3E;
+  --color-bks-wa-light: #25D366;
   --color-bks-light: #F5F5F5;
 }
 
@@ -32,6 +31,12 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Global focus-visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #F26522;
+  outline-offset: 2px;
 }
 
 @layer base {
