@@ -19,7 +19,7 @@ const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20BKS%20Contra
 const services = [
   {
     name: "General Contracting",
-    desc: "One team handles your entire build — from the foundation pour to final handover. No subcontractor headaches, no shifting timelines.",
+    desc: "One team handles your entire build from the foundation pour to final handover. No subcontractor headaches, no shifting timelines.",
     icon: <Building2 size={32} />,
   },
   {
@@ -29,7 +29,7 @@ const services = [
   },
   {
     name: "Renovations",
-    desc: "Update outdated structures without the disruption. We modernise facilities while keeping your operations running.",
+    desc: "We update outdated structures without the disruption. Your facility keeps running while we get the work done.",
     icon: <Hammer size={32} />,
   },
   {
@@ -39,24 +39,24 @@ const services = [
   },
   {
     name: "Electrical",
-    desc: "Panel upgrades, high-voltage wiring, and full commercial electrical fit-outs by certified electricians.",
+    desc: "Panel upgrades, high-voltage wiring, and full commercial electrical fit-outs done by certified electricians.",
     icon: <Zap size={32} />,
   },
   {
     name: "Roofing",
-    desc: "Roofing systems built for Namibian conditions — heat, wind, and rain. No leaks, no callbacks, no shortcuts.",
+    desc: "Roofing systems built for Namibian heat, wind, and rain. No leaks, no callbacks, no shortcuts.",
     icon: <HomeIcon size={32} />,
   },
   {
     name: "Waste Removal",
-    desc: "Site clearing and debris removal so your project stays clean, safe, and moving forward.",
+    desc: "Site clearing and debris removal to keep your project clean, safe, and moving forward.",
     icon: <Trash2 size={32} />,
   },
 ];
 
 const safetyItems = [
   "On-site supervisors on every job, every day",
-  "Certified tradespeople — not casual labour",
+  "Certified tradespeople, not casual labour",
   "OSHA-compliant safety on all sites",
 ];
 
@@ -125,14 +125,14 @@ export default function Home() {
           }`}
           role="banner"
         >
-          {/* Logo Image — replaces text wordmark */}
+          {/* Logo Image */}
           <a
             href="https://bkscontractors.cc"
             className="flex items-center select-none cursor-pointer"
-            aria-label="BKS Contractors — Home"
+            aria-label="BKS Contractors Home"
           >
             <Image
-              src="/bks-logo.svg"
+              src="/bks-logo.png"
               alt="BKS Contractors logo"
               width={160}
               height={56}
@@ -321,7 +321,7 @@ export default function Home() {
                   aria-hidden="true"
                 ></span>
                 <span className="font-[var(--font-subheading)] text-sm text-[#F5F5F5] uppercase tracking-wider">
-                  Trusted by businesses across Namibia
+                  Building across Namibia
                 </span>
               </div>
               <h1
@@ -330,12 +330,12 @@ export default function Home() {
               >
                 YOUR PROJECT,
                 <br />
-                BUILT RIGHT —
+                BUILT RIGHT.
                 <br />
                 <span className="text-[#F26522]">ON TIME, EVERY TIME.</span>
               </h1>
               <p className="text-xl md:text-2xl text-[#F5F5F5]/80 max-w-2xl mb-10 leading-relaxed">
-                One team handles your entire build — foundations, plumbing,
+                One team handles your entire build. Foundations, plumbing,
                 electrical, roofing, and clean-up. No subcontractor chaos.
                 No missed deadlines.
               </p>
@@ -396,7 +396,7 @@ export default function Home() {
                 <p className="mt-6 text-lg text-[#4A6A8A]">
                   Most contractors specialise in one trade and sub-contract the
                   rest. We don&apos;t. Every service below is delivered by our
-                  own people — so nothing falls through the cracks.
+                  own people, so nothing falls through the cracks.
                 </p>
               </div>
             </div>
@@ -488,9 +488,9 @@ export default function Home() {
                 </h3>
                 <p className="text-[#4A6A8A] mb-8">
                   Send us the details on WhatsApp. Our team reviews every
-                  enquiry within the day — no forms, no waiting, no sales
+                  enquiry within the day. No forms, no waiting, no sales
                   pitch. Just an honest answer on whether we&apos;re the
-                  right fit.
+                  right fit for your project.
                 </p>
                 <a
                   href={WHATSAPP_URL}
@@ -513,14 +513,14 @@ export default function Home() {
       >
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
-            {/* Footer Logo Image — replaces text wordmark */}
+            {/* Footer Logo Image */}
             <a
               href="https://bkscontractors.cc"
               className="flex items-center select-none cursor-pointer"
-              aria-label="BKS Contractors — Home"
+              aria-label="BKS Contractors Home"
             >
               <Image
-                src="/bks-logo.svg"
+                src="/bks-logo.png"
                 alt="BKS Contractors logo"
                 width={180}
                 height={64}

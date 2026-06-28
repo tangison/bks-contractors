@@ -17,9 +17,9 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "BKS Contractors — General Contractor in Namibia | On Time, Every Time",
+  title: "BKS Contractors | General Contractor in Namibia | On Time, Every Time",
   description:
-    "BKS Contractors — full-service general contractor in Namibia. One team handles your entire build: foundations, plumbing, electrical, roofing. Free quote.",
+    "BKS Contractors, full-service general contractor in Namibia. One team handles your entire build: foundations, plumbing, electrical, roofing. Free quote.",
   keywords: [
     "BKS Contractors",
     "general contractor Namibia",
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "BKS Contractors — Your Project, Built Right",
+    title: "BKS Contractors | Your Project, Built Right",
     description:
-      "One team, every trade. Foundations, plumbing, electrical, roofing — delivered on time, every time. Get your free quote.",
+      "One team, every trade. Foundations, plumbing, electrical, roofing, delivered on time, every time. Get your free quote.",
     url: "https://bkscontractors.cc",
     siteName: "BKS Contractors",
     locale: "en_NA",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BKS Contractors — Your Project, Built Right",
+    title: "BKS Contractors | Your Project, Built Right",
     description:
       "Full-service general contracting in Namibia. One team handles your entire build.",
   },
@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en-NA">
       <head>
-        <link rel="icon" href="/bks-logo.svg" type="image/svg+xml" />
+        <link rel="icon" href="/bks-logo.png" type="image/png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -76,7 +76,7 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               name: "BKS Contractors",
               description:
-                "Full-service general contractor in Namibia. One team handles your entire build — foundations, plumbing, electrical, roofing, and waste removal.",
+                "Full-service general contractor in Namibia. One team handles your entire build: foundations, plumbing, electrical, roofing, and waste removal.",
               url: "https://bkscontractors.cc",
               telephone: "+264817877867",
               address: {
