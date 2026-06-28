@@ -147,7 +147,7 @@ export default function Home() {
         >
           <a
             href="https://bkscontractors.cc"
-            className="flex items-center select-none cursor-pointer"
+            className="flex items-center select-none"
             aria-label="BKS Contractors Home"
           >
             <Image
@@ -250,7 +250,7 @@ export default function Home() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 bg-[#D05518] text-[#FFFFFF] font-[var(--font-subheading)] text-xl py-4 px-6 rounded text-center w-full shadow-lg uppercase tracking-wider"
+          className="mt-8 bg-[#D05518] text-[#FFFFFF] font-[var(--font-subheading)] text-xl py-4 px-6 rounded text-center w-full shadow-lg uppercase tracking-wider focus-visible:ring-2 focus-visible:ring-[#F26522]"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           Message Us on WhatsApp
@@ -440,7 +440,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
             <a
               href="https://bkscontractors.cc"
-              className="flex items-center select-none cursor-pointer"
+              className="flex items-center select-none"
               aria-label="BKS Contractors Home"
             >
               <Image

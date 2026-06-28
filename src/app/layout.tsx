@@ -78,6 +78,7 @@ export default function RootLayout({
               description:
                 "Full-service general contractor in Namibia. One team handles your entire build: foundations, plumbing, electrical, roofing, and waste removal.",
               url: "https://bkscontractors.cc",
+              image: "https://bkscontractors.cc/bks-logo.png",
               telephone: "+264817877867",
               address: {
                 "@type": "PostalAddress",

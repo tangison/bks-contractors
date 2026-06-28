@@ -65,3 +65,33 @@ Stage Summary:
 - All critical accessibility contrast issues resolved
 - All high-priority security headers added
 - Site redeployed with all fixes applied
+
+---
+Task ID: 4
+Agent: Tangison Audit (Second Pass)
+Task: Tangison Audit Phase 1-6 second pass - find and fix issues not covered in first round
+
+Work Log:
+- Full re-read of all source files: page.tsx, layout.tsx, globals.css, next.config.ts, package.json, robots.txt, sitemap.ts, tsconfig.json, api/route.ts
+- Audited across 7 categories: SEO, Performance, Security, Accessibility, Code Quality, Anti-patterns, Mobile Responsiveness
+
+Findings (new, not previously reported):
+- SEO-001 (High): Missing og:image and twitter:image in metadata. Social sharing previews will have no image. The existing logo (839x297) is not suitable as an OG image (should be 1200x630). A proper OG image needs to be designed. NOT FIXED - requires design asset.
+- SEO-002 (Info): robots.txt sitemap URL references bkscontractors.cc. Consistent with metadataBase and sitemap.ts. Works correctly if custom domain is configured on Vercel. NOT FIXED - informational only.
+- SEO-003 (Low): JSON-LD LocalBusiness schema missing `image` property (recommended by Google for rich results). FIXED - added `image` field pointing to bks-logo.png in layout.tsx line 81.
+- A11Y-009 (Medium): Mobile menu WhatsApp CTA button (page.tsx line 253) missing focus-visible ring. The other two mobile menu links had focus-visible styling but this button did not. FIXED - added `focus-visible:ring-2 focus-visible:ring-[#F26522]` to the className.
+- CODE-002 (Low): Redundant `cursor-pointer` class on `<a>` elements wrapping header and footer logos. Anchor elements already have pointer cursor by default. FIXED - removed from both instances (page.tsx lines 150 and 443).
+
+Categories with no new findings:
+- Performance: No new issues. First pass already addressed caching, unused CSS, and inline SVGs. Known remaining (PERF-001 unused deps, PERF-002 large PNG) are intentionally deferred.
+- Security: Headers are comprehensive (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-XSS-Protection). No gaps found. CSP allows unsafe-inline/unsafe-eval which is required by Next.js runtime and inline JSON-LD. Redundant frame-ancestors:none + X-Frame-Options:DENY is harmless.
+- Anti-patterns: No AI-sounding language, no em dashes, no generic design patterns found. Copy reads naturally.
+- Mobile Responsiveness: Responsive breakpoints (md, lg, xl) are well applied throughout. No horizontal overflow or layout issues.
+- Code Quality: TypeScript strict mode enabled, proper heading hierarchy (single H1, proper H2/H3 nesting), all imports used, correct use of refs and useCallback.
+
+Stage Summary:
+- 3 issues fixed (SEO-003, A11Y-009, CODE-002)
+- 1 issue deferred requiring design asset (SEO-001: OG image)
+- 1 informational note (SEO-002: domain consistency)
+- No significant new issues found across Performance, Security, Anti-patterns, Mobile, or Code Quality
+- The site is in good shape after 17 total fixes across two audit rounds
