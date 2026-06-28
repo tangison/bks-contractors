@@ -1,0 +1,41 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-heading);
+  --font-subheading: var(--font-subheading);
+
+  /* BKS Brand Colors */
+  --color-bks-navy: #1A2A3A;
+  --color-bks-orange: #F26522;
+  --color-bks-steel: #4A6A8A;
+  --color-bks-wa: #25D366;
+  --color-bks-light: #F5F5F5;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #F5F5F5;
+  --foreground: #1A2A3A;
+}
+
+::selection {
+  background-color: #F26522;
+  color: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
