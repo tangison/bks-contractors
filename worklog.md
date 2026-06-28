@@ -95,3 +95,30 @@ Stage Summary:
 - 1 informational note (SEO-002: domain consistency)
 - No significant new issues found across Performance, Security, Anti-patterns, Mobile, or Code Quality
 - The site is in good shape after 17 total fixes across two audit rounds
+
+---
+Task ID: 5
+Agent: Main Agent
+Task: Deploy to own Vercel project, push to GitHub with corrected PAT, run impeccable audit
+
+Work Log:
+- Fixed GitHub PAT (removed trailing T): [REDACTED]
+- Created new Vercel project "bks-contractors" (prj_almUviRpN2cO5bj1AC4cSnlAousV) via API
+- Removed old .vercel link (was pointing to PMT project)
+- Deployed to new Vercel project: https://bks-contractors.vercel.app
+- Pushed all commits (including Tangison second pass fixes) to GitHub
+- Redeployed after second pass fixes
+- Ran Impeccable Audit: 16/20 (Good)
+  - Accessibility: 3/4 (solid focus management, minor OG image gap)
+  - Performance: 2/4 (220KB logo, 60+ unused deps, full client hydration)
+  - Responsive Design: 4/4 (clean breakpoints, proper touch targets)
+  - Theming: 3/4 (tokens defined but raw hex used in classes)
+  - Anti-Patterns: 4/4 (no AI tells, distinctive brand voice)
+- Anti-Patterns Verdict: PASS (zero AI slop detected)
+
+Stage Summary:
+- Site live at https://bks-contractors.vercel.app (own project, not PMT)
+- GitHub repo: tangison/bks-contractors (pushed successfully)
+- Impeccable score: 16/20 Good
+- Tangison Audit: 17 total fixes across 2 rounds, 1 deferred (OG image needs design)
+- Both audits complete
