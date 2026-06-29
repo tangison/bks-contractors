@@ -17,41 +17,50 @@ import {
 const WHATSAPP_NUMBER = "264817877867";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20BKS%20Contractors,%20I%20am%20interested%20in%20your%20services.`;
 
+const HERO_IMG = "https://sfile.chatglm.cn/images-ppt/41661bbfcdf4.jpg";
+
 const services = [
   {
     name: "General Contracting",
     desc: "One team handles your entire build from the foundation pour to final handover. No subcontractor headaches, no shifting timelines.",
     icon: <Building2 size={32} />,
+    img: "https://sfile.chatglm.cn/images-ppt/d85b13cd8014.jpg",
   },
   {
     name: "Construction Management",
     desc: "We keep your project on schedule and on budget. Material ordering, site coordination, and daily progress oversight included.",
     icon: <ClipboardList size={32} />,
+    img: "https://sfile.chatglm.cn/images-ppt/20237074a395.jpg",
   },
   {
     name: "Renovations",
     desc: "We update outdated structures without the disruption. Your facility keeps running while we get the work done.",
     icon: <Hammer size={32} />,
+    img: "https://sfile.chatglm.cn/images-ppt/f4b96c79156c.jpg",
   },
   {
     name: "Plumbing",
     desc: "Commercial water systems, drainage, and pipeline installations that pass inspection first time and last for years.",
     icon: <Wrench size={32} />,
+    img: "https://sfile.chatglm.cn/images-ppt/b2565a5a8e21.jpg",
   },
   {
     name: "Electrical",
     desc: "Panel upgrades, high-voltage wiring, and full commercial electrical fit-outs done by certified electricians.",
     icon: <Zap size={32} />,
+    img: "https://sfile.chatglm.cn/images-ppt/79faaccd54ac.png",
   },
   {
     name: "Roofing",
     desc: "Roofing systems built for Namibian heat, wind, and rain. No leaks, no callbacks, no shortcuts.",
     icon: <HomeIcon size={32} />,
+    img: "https://sfile.chatglm.cn/images-ppt/e5835b1a4fef.jpg",
   },
   {
     name: "Waste Removal",
     desc: "Site clearing and debris removal to keep your project clean, safe, and moving forward.",
     icon: <Trash2 size={32} />,
+    img: "https://sfile.chatglm.cn/images-ppt/0ed477382725.jpg",
   },
 ];
 
@@ -258,28 +267,25 @@ export default function Home() {
       </div>
 
       <main className="flex-grow" id="main-content">
+        {/* HERO */}
         <section
-          className="relative bg-[#1A2A3A] pt-40 pb-20 lg:pt-56 lg:pb-32 overflow-hidden"
+          className="relative pt-40 pb-20 lg:pt-56 lg:pb-32 overflow-hidden"
           aria-labelledby="hero-heading"
         >
-          <div className="absolute inset-0 opacity-[0.07] pointer-events-none" aria-hidden="true">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#F5F5F5" strokeWidth="1" />
-                </pattern>
-                <pattern id="diagonal" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M-1,1 l2,-2 M0,20 l20,-20 M19,21 l2,-2" fill="none" stroke="#4A6A8A" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" />
-              <rect width="100%" height="100%" fill="url(#diagonal)" />
-            </svg>
+          <div className="absolute inset-0" aria-hidden="true">
+            <Image
+              src={HERO_IMG}
+              alt=""
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#1A2A3A]/90 via-[#1A2A3A]/80 to-[#1A2A3A]/70"></div>
           </div>
 
           <div className="container mx-auto px-6 lg:px-12 relative z-10">
             <div className="max-w-4xl">
-              <div className="inline-flex items-center gap-2 mb-6 border border-[#4A6A8A] bg-[#4A6A8A]/20 px-4 py-2 rounded">
+              <div className="inline-flex items-center gap-2 mb-6 border border-[#4A6A8A] bg-[#4A6A8A]/20 px-4 py-2 rounded backdrop-blur-sm">
                 <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" aria-hidden="true"></span>
                 <span className="font-[var(--font-subheading)] text-sm text-[#F5F5F5] uppercase tracking-wider">
                   Building across Namibia
@@ -313,7 +319,7 @@ export default function Home() {
                 </a>
                 <a
                   href="#services"
-                  className="bg-transparent border-2 border-[#4A6A8A] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-8 rounded hover:bg-[#4A6A8A]/20 transition-colors flex items-center justify-center uppercase tracking-wider"
+                  className="bg-transparent border-2 border-[#F5F5F5]/40 text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-8 rounded hover:bg-[#F5F5F5]/10 transition-colors flex items-center justify-center uppercase tracking-wider"
                 >
                   See What We Build
                 </a>
@@ -322,6 +328,21 @@ export default function Home() {
           </div>
         </section>
 
+        {/* PHOTO STRIP */}
+        <div
+          className="relative h-48 md:h-72 overflow-hidden"
+          aria-hidden="true"
+        >
+          <Image
+            src="https://sfile.chatglm.cn/images-ppt/328b6a0551c4.jpg"
+            alt=""
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1A2A3A]/30 via-transparent to-[#FFFFFF]"></div>
+        </div>
+
+        {/* SERVICES */}
         <section
           id="services"
           className="py-24 bg-[#FFFFFF]"
@@ -349,36 +370,57 @@ export default function Home() {
               {services.map((service, idx) => (
                 <article
                   key={service.name}
-                  className={`bg-[#F5F5F5] p-8 lg:p-10 border-t-4 border-[#1A2A3A] hover:border-[#F26522] transition-colors group focus-within:border-[#F26522] ${
+                  className={`relative bg-[#F5F5F5] border-t-4 border-[#1A2A3A] hover:border-[#F26522] transition-colors group focus-within:border-[#F26522] overflow-hidden ${
                     idx === services.length - 1
                       ? "md:col-span-2 xl:col-span-1"
                       : ""
                   }`}
                 >
-                  <div
-                    className="w-14 h-14 bg-[#1A2A3A] group-hover:bg-[#F26522] transition-colors flex items-center justify-center rounded-sm mb-6 text-[#FFFFFF]"
-                    aria-hidden="true"
-                  >
-                    {service.icon}
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={service.img}
+                      alt=""
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A2A3A]/70 to-transparent"></div>
+                    <div
+                      className="absolute bottom-4 left-6 w-12 h-12 bg-[#F26522] flex items-center justify-center rounded-sm text-[#FFFFFF] group-hover:bg-[#D05518] transition-colors"
+                      aria-hidden="true"
+                    >
+                      {service.icon}
+                    </div>
                   </div>
-                  <h3 className="font-[var(--font-heading)] text-xl md:text-2xl text-[#1A2A3A] mb-4 uppercase tracking-tight">
-                    {service.name}
-                  </h3>
-                  <p className="text-[#4A6A8A] leading-relaxed">
-                    {service.desc}
-                  </p>
+                  <div className="p-8 lg:p-10">
+                    <h3 className="font-[var(--font-heading)] text-xl md:text-2xl text-[#1A2A3A] mb-4 uppercase tracking-tight">
+                      {service.name}
+                    </h3>
+                    <p className="text-[#4A6A8A] leading-relaxed">
+                      {service.desc}
+                    </p>
+                  </div>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
+        {/* SAFETY */}
         <section
           id="safety"
           className="bg-[#4A6A8A] py-20 lg:py-32 relative overflow-hidden"
           aria-labelledby="safety-heading"
         >
-          <div className="absolute right-0 top-0 h-full w-1/3 bg-[#1A2A3A] hidden lg:block transform -skew-x-12 translate-x-20" aria-hidden="true"></div>
+          <div className="absolute right-0 top-0 h-full w-1/2 overflow-hidden hidden lg:block" aria-hidden="true">
+            <Image
+              src="https://sfile.chatglm.cn/images-ppt/1e171ee7fe01.jpg"
+              alt=""
+              fill
+              className="object-cover opacity-30"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#4A6A8A]"></div>
+          </div>
 
           <div className="container mx-auto px-6 lg:px-12 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -425,7 +467,7 @@ export default function Home() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block bg-[#D05518] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-10 rounded hover:bg-[#B84816] transition-transform hover:scale-105 uppercase tracking-wider"
+                  className="inline-block bg-[#D05518] text-[#FFFFFF] font-[var(--font-subheading)] text-lg py-4 px-10 rounded hover:bg-[#B84816] transition-transform hover:scale-105 uppercase tracking-wider focus-visible:ring-2 focus-visible:ring-[#FFD700] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A2A3A]"
                 >
                   Get Your Free Quote
                 </a>
@@ -433,6 +475,21 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* BOTTOM PHOTO STRIP */}
+        <div
+          className="relative h-40 md:h-56 overflow-hidden"
+          aria-hidden="true"
+        >
+          <Image
+            src="https://sfile.chatglm.cn/images-ppt/d612e1395660.jpg"
+            alt=""
+            fill
+            className="object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A2A3A] via-[#1A2A3A]/40 to-[#4A6A8A]/20"></div>
+        </div>
       </main>
 
       <footer className="bg-[#1A2A3A] pt-16 pb-10 border-t-[12px] border-[#F26522] mt-auto">

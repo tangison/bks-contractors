@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: false,
   allowedDevOrigins: ["space-z.ai"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "sfile.chatglm.cn",
+        pathname: "/images-ppt/**",
+      },
+    ],
+  },
   async headers() {
     return [
       {
